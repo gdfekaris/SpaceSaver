@@ -7,13 +7,13 @@ export const THIS_MONTH = +(new Date().getMonth()) + 1;
 
 // Week days names and shortnames
 export const WEEK_DAYS = {
+  Sunday: "Sun",
   Monday: "Mon",
   Tuesday: "Tue",
   Wednesday: "Wed",
   Thursday: "Thu",
   Friday: "Fri",
-  Saturday: "Sat",
-  Sunday: "Sun",
+  Saturday: "Sat"
 }
 
 // Calendar months names and shortnames
@@ -149,7 +149,7 @@ export default (month = THIS_MONTH, year = THIS_YEAR) => {
   // Get number of days to be displayed from previous and next months
   // These ensure a total of 42 days (6 weeks) displayed on the calendar
 
-  const daysFromPrevMonth = monthFirstDay - 1;
+  const daysFromPrevMonth = monthFirstDay //- 1;
   const daysFromNextMonth = (CALENDAR_WEEKS * 7) - (daysFromPrevMonth + monthDays);
 
   // Get the previous and next months and years
