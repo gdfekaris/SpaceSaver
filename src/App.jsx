@@ -1,10 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import rootReducer from './reducers'
+
 import moment from 'moment';
-import HourDisplay from './components/HourDisplay.jsx';
-import RoomDisplay from './components/RoomDisplay.jsx';
+
+import HourDisplay from './components/HourDisplay.jsx'
+import RoomDisplay from './components/RoomDisplay.jsx'
 import SelectBar from './components/SelectBar.jsx';
 import { AppWrap, CellWrap, GlobalStyle } from './components/styles.jsx';
+
+import {setLibrary, addBooking, addMultipleBookings, setDate} from "./actions"
+
+const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 const bookingsURL = 'http://localhost:3838/bookings'
 const roomsURL = 'http://localhost:3838/rooms'
@@ -24,15 +33,18 @@ class App extends React.Component {
         this.setState({
           bookings: data
         })
+        data.forEach(item => {store.dispatch(addBooking(item))})
       })
-    });
+    })
     fetch(roomsURL).then((res) => {
       res.json().then((data) => {
         this.setState({
           rooms: data
         })
       })
-    });
+    })
+    store.dispatch(setDate(moment()))
+    store.dispatch(setLibrary('Walnut Creek Library'))
   }
 
   generateRooms() {
@@ -45,27 +57,30 @@ class App extends React.Component {
       })
       return (
         <RoomDisplay
-          key={index}
+          key={room.name + index}
           startTime={moment(room.openHours.start)}
           duration={8 * 4}
           currentBookings={roomBookings}
           roomName={room.name} />
-      );
+      )
     })
   }
+
   render() {
     return (
-      <AppWrap>
-        <GlobalStyle />
-        <SelectBar/>
-        <CellWrap>
+        <AppWrap>
+          <GlobalStyle />
+          <SelectBar/>
           <HourDisplay startTime={moment({ hours: 10 })} duration={8 * 4} />
           {this.generateRooms()}
-        </CellWrap>
-      </AppWrap>
-    );
+        </AppWrap>
+      );
   }
 }
 
 const rootElement = document.getElementById('root');
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+, rootElement)
