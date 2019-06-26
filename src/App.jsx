@@ -4,7 +4,7 @@ import moment from 'moment';
 import HourDisplay from './components/HourDisplay.jsx';
 import RoomDisplay from './components/RoomDisplay.jsx';
 import SelectBar from './components/SelectBar.jsx';
-import { AppWrap, GlobalStyle } from './components/styles.jsx';
+import { AppWrap, CellWrap, GlobalStyle } from './components/styles.jsx';
 
 const bookingsURL = 'http://localhost:3838/bookings'
 const roomsURL = 'http://localhost:3838/rooms'
@@ -58,8 +58,10 @@ class App extends React.Component {
       <AppWrap>
         <GlobalStyle />
         <SelectBar/>
-        <HourDisplay startTime={moment({ hours: 10 })} duration={8 * 4} />
-        {this.generateRooms()}
+        <CellWrap>
+          <HourDisplay startTime={moment({ hours: 10 })} duration={8 * 4} />
+          {this.generateRooms()}
+        </CellWrap>
       </AppWrap>
     );
   }

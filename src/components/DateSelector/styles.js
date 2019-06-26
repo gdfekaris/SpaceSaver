@@ -2,15 +2,16 @@ import styled from "styled-components";
 
 //These styles wrap the DateSelector components
 const DateSelectorWrapper = styled.div`
-  position: absolute;
+  position: relative;
   display: inline-block;
-  left: 50vh;
+  height: 3vh;
+  top: -45px;
+  left: 40%;
+  transform: translate(50%, 50%);
   z-index: 1;
   border: solid;
-  margin: 4vh;
   padding: 10px;
   background-color: white;
-  justify-content: start;
   cursor: pointer;
   font-family: Arial;
 `
@@ -38,7 +39,7 @@ const DateCell = styled.div`
 
 const CurrentMonthLayout = styled.div`
   position: relative;
-  display: block;
+  display: inline-block;
   width: 50vh;
   border: solid;
   z-index: 1;
@@ -66,9 +67,8 @@ const WeekdayCell = styled.div`
 
 const Calendar = styled.div`
   position: relative;
-  display: block;
+  display: inline-block;
   top: 3vh;
-  left: 39.5vh;
   width: 50vh;
   z-index: 1;
   background-color: white;
@@ -78,7 +78,7 @@ const Calendar = styled.div`
 
 const MonthBar = styled.div`
   position: relative;
-  display: block;
+  display: inline-block;
   width: 45vh;
   z-index: 1;
   margin: 10px;
