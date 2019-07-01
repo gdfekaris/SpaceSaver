@@ -6,7 +6,7 @@ import { setDate } from '../../actions'
 
 import onClickOutside from "react-onclickoutside";
 import calendar, { THIS_YEAR, THIS_MONTH, WEEK_DAYS, CALENDAR_MONTHS } from '../helpers/calendar.js';
-import { DateSelectorWrapper, CurrentMonthLayout, WeekdayCell, DateCell, Calendar, MonthBar } from './styles.js';
+import { DateSelectorWrapper, CurrentMonthLayout, WeekdayCell, DateCell, Calendar, MonthBar, CurrentDateWrap } from './styles.js';
 
 class CurrentDate extends React.Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class CurrentDate extends React.Component {
     this.selectDate = this.selectDate.bind(this);
     this.selectMonth = this.selectMonth.bind(this);
     this.renderDates = this.renderDates.bind(this);
+    this.renderList = this.renderList.bind(this);
   }
 
   handleClickOutside(e) {
@@ -124,32 +125,38 @@ class CurrentDate extends React.Component {
     });
   }
 
+  renderList (listOpen, monthNumber, monthBarContent) {
 
-  render() {
-    const { listOpen, monthNumber, monthBarContent } = this.state;
-
-    if (!listOpen) {
-      return (
-        <DateSelectorWrapper onClick={this.onClick}>
-          {`${this.state.date} >`}
-        </DateSelectorWrapper>
-      );
-    } else {
+    if (listOpen) {
       return (
         <Calendar>
-        <CurrentMonthLayout>
-            <MonthBar onClick={this.selectMonth}>{monthBarContent}</MonthBar>
-          {Object.values(WEEK_DAYS).map((day, index) => {
-            return (
-              <WeekdayCell key={index}>{day}</WeekdayCell>
-            );
-          })}
-          {this.renderDates(monthNumber)}
-        </CurrentMonthLayout>
+          <CurrentMonthLayout>
+          <MonthBar onClick={this.selectMonth}>{monthBarContent}</MonthBar>
+            {Object.values(WEEK_DAYS).map((day, index) => {
+              return (
+                <WeekdayCell key={index}>{day}</WeekdayCell>
+              );
+            })}
+            {this.renderDates(monthNumber)}
+          </CurrentMonthLayout>
         </Calendar>
       );
     }
 
+  }
+
+
+  render() {
+    const { listOpen, monthNumber, monthBarContent } = this.state;
+    let selectColor = (listOpen) ? 'rgba(245, 255, 250, .8)' : 'grey';
+    return (
+        <CurrentDateWrap>
+          <DateSelectorWrapper onClick={this.onClick} color={selectColor}>
+            {`${this.state.date}`}
+          </DateSelectorWrapper>
+        {this.renderList(listOpen, monthNumber, monthBarContent)}
+        </CurrentDateWrap>
+    );
   }
 }
 

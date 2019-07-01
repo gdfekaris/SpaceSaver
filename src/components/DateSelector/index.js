@@ -1,5 +1,6 @@
 import React from "react";
 import CurrentDate from './currentDate.jsx';
+import { DateSelectorWrapper, CurrentDateWrap } from './styles.js';
 
 class DateSelector extends React.Component {
   constructor(props) {
@@ -22,9 +23,9 @@ class DateSelector extends React.Component {
     const { listOpen } = this.state;
 
     return (
-      <div onClick={this.onClick}>
+      <CurrentDateWrap onClick={this.onClick} >
         <CurrentDate open={listOpen} />
-      </div>
+      </CurrentDateWrap>
     );
   }
 }

@@ -5,7 +5,7 @@ import { setLibrary } from '../actions'
 
 import onClickOutside from "react-onclickoutside";
 import { formatLocations } from './helpers/locations.js';
-import { LocationSelectorWrapper, LocationItem } from './styles.jsx';
+import { LocationSelectorWrapper, LocationList, LocationItem } from './styles.jsx';
 
 const locationsMock = [
   'Walnut Creek Library',
@@ -41,18 +41,26 @@ class LocationDropdown extends React.Component {
 
   selectLocation(e) {
     this.setState({ headerTitle: e.currentTarget.textContent });
-    this.props.dispatch(setLibrary(e.currentTarget.textContent))
+    this.props.dispatch(setLibrary(e.currentTarget.textContent));
+    this.handleClickOutside();
   }
 
   renderList(listOpen, locations) {
+
+    let mapLocs = locations.map((item, index) => {
+      return (
+        <LocationItem key={index} onClick={this.selectLocation}>
+          {item.title}
+        </LocationItem>
+      );
+    });
+
     if (listOpen) {
-      return locations.map((item, index) => {
-        return (
-          <LocationItem key={index} onClick={this.selectLocation}>
-            {item.title}
-          </LocationItem>
-        );
-      });
+      return (
+        <LocationList>
+          { mapLocs }
+        </LocationList>
+      );
     } else {
       return null;
     }
@@ -64,12 +72,15 @@ class LocationDropdown extends React.Component {
 
   render() {
     const { listOpen, locations, headerTitle } = this.state;
+    let selectColor = (listOpen) ? 'rgba(95, 249, 172)' : 'grey';
+
     return (
-      <LocationSelectorWrapper onClick={this.onClick}>
-        {headerTitle}
-        {listOpen ? " <" : " >"}
+      <div>
+        <LocationSelectorWrapper onClick={this.onClick} color={selectColor}>
+          {headerTitle}
+        </LocationSelectorWrapper>
         {this.renderList(listOpen, locations)}
-      </LocationSelectorWrapper>
+      </div>
     );
   }
 }

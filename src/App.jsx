@@ -9,7 +9,10 @@ import moment from 'moment';
 import HourDisplay from './components/HourDisplay.jsx'
 import RoomDisplay from './components/RoomDisplay.jsx'
 import SelectBar from './components/SelectBar.jsx';
-import { AppWrap, CellWrap, GlobalStyle } from './components/styles.jsx';
+import { AppWrap, GlobalStyle, CellsWrap, Header } from './components/styles.jsx';
+import LocationDropdown from './components/LocationDropdown.jsx';
+//import DateSelector from './components/DateSelector';
+import CurrentDate from './components/DateSelector/currentDate.jsx';
 
 import {setLibrary, addBooking, addMultipleBookings, setDate} from "./actions"
 
@@ -70,9 +73,14 @@ class App extends React.Component {
     return (
         <AppWrap>
           <GlobalStyle />
-          <SelectBar/>
-          <HourDisplay startTime={moment({ hours: 10 })} duration={8 * 4} />
-          {this.generateRooms()}
+          <Header>
+            <LocationDropdown />
+            <CurrentDate />
+          </Header>
+          <CellsWrap>
+            <HourDisplay startTime={moment({ hours: 10 })} duration={8 * 4} />
+            {this.generateRooms()}
+          </CellsWrap>
         </AppWrap>
       );
   }
