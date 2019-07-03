@@ -5,7 +5,7 @@ import { setLibrary } from '../actions'
 
 import onClickOutside from "react-onclickoutside";
 import { formatLocations } from './helpers/locations.js';
-import { LocationSelectorWrapper, LocationList, LocationItem } from './styles.jsx';
+import { LocationSelectorWrapper, LocationList, LocationItem, LocationButtonMenuWrap } from './styles.jsx';
 
 const locationsMock = [
   'Walnut Creek Library',
@@ -22,7 +22,7 @@ class LocationDropdown extends React.Component {
     super(props);
     this.state = {
       listOpen: false,
-      headerTitle: 'Select Location',
+      headerTitle: 'Select Library',
       locations: formatLocations(locationsMock)
     }
     this.onClick = this.onClick.bind(this);

@@ -38,15 +38,13 @@ const AppWrap = styled.div`
   font-family: Lato;
 `
 
-// const AppWrap = styled.div`
-//   position: relative;
-//   border: solid;
-//   display: block;
-//   width: 90vh;
-//   top: 5vh;
-//   left: 5vh;
-//   margin-bottom: 5vh;
-// `
+const LocationButtonMenuWrap = styled.div`
+  position: relative;
+  display: block;
+  height: 60vh;
+  top: 7%;
+  left 2%;
+`
 
 const Header = styled.div`
   height: 50vh;
@@ -114,9 +112,9 @@ const LocationSelectorWrapper = styled.div`
 const LocationList = styled.div`
   position: absolute;
   display: inline-block;
-  top: 20%;
+  top: 25%;
   left 2%;
-  z-index: 1;
+  z-index: 2;
   padding: 10px;
   border-radius: 5px;
   background-color: white;
@@ -159,6 +157,7 @@ export {
   LocationSelectorWrapper,
   LocationList,
   LocationItem,
+  LocationButtonMenuWrap,
   CellsWrap
 }
 

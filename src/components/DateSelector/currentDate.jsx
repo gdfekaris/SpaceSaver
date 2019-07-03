@@ -47,6 +47,12 @@ class CurrentDate extends React.Component {
     let selection = e.currentTarget.textContent;
     let notElevenCheck = !(selection[0] === '1');
 
+    let sameMonthCheck = monthName === Object.keys(CALENDAR_MONTHS)[THIS_MONTH - 1];
+
+    if (sameMonthCheck && Number(selection) < Number(moment().format('Do').slice(0, 1)) || Number(moment().format('Do').slice(0, 2))) {
+        return alert("Please select a current or upcoming date.");
+    }
+
     if (selection === '1' || (notElevenCheck && selection[1] === '1')) {
       selection = selection + 'st';
     } else if (selection === '2' || (notElevenCheck && selection[1] === '2')) {
@@ -101,17 +107,20 @@ class CurrentDate extends React.Component {
       return (
         <div key={index}>
           {rowCells.map((dateInfo, index) => {
-            let color = 'black';
+            let color = 'grey';
             let selectorFunction = this.selectDate
 
             let prevNextTest = !(month === Number(dateInfo[1][1]));
-            let currentDayTest = (!prevNextTest && dateInfo[2] === moment().format('Do').slice(0, 2));
-            let replaceZeroTest = (dateInfo[2][0] === '0')
+            let currentDayTest1 = (!prevNextTest && dateInfo[2] === moment().format('Do').slice(0, 2));
+            let currentDayTest2 = (!prevNextTest && dateInfo[2] === '0' + moment().format('Do').slice(0, 1));
+            let replaceZeroTest = (dateInfo[2][0] === '0');
 
-            if (this.state.monthName != Object.keys(CALENDAR_MONTHS)[THIS_MONTH - 1]) { currentDayTest = false }
+            if (this.state.monthName != Object.keys(CALENDAR_MONTHS)[THIS_MONTH - 1]) { currentDayTest1 = false }
+            if (this.state.monthName != Object.keys(CALENDAR_MONTHS)[THIS_MONTH - 1]) { currentDayTest2 = false }
 
-            if (prevNextTest) { color = 'grey'; selectorFunction = null; }
-            if (currentDayTest) { color = 'blue' }
+            if (prevNextTest) { color = 'rgba(131, 135, 131, .4)'; selectorFunction = null; }
+            if (currentDayTest1) { color = 'rgba(95, 249, 172)' }
+            if (currentDayTest2) { color = 'rgba(95, 249, 172)' }
             if (replaceZeroTest) { dateInfo[2] = dateInfo[2].replace(/0/gi, '') }
 
             return (
@@ -130,15 +139,15 @@ class CurrentDate extends React.Component {
     if (listOpen) {
       return (
         <Calendar>
-          <CurrentMonthLayout>
           <MonthBar onClick={this.selectMonth}>{monthBarContent}</MonthBar>
-            {Object.values(WEEK_DAYS).map((day, index) => {
+          <CurrentMonthLayout>{
+            Object.values(WEEK_DAYS).map((day, index) => {
               return (
                 <WeekdayCell key={index}>{day}</WeekdayCell>
               );
-            })}
-            {this.renderDates(monthNumber)}
-          </CurrentMonthLayout>
+            })
+          }</CurrentMonthLayout>
+          {this.renderDates(monthNumber)}
         </Calendar>
       );
     }
@@ -150,12 +159,12 @@ class CurrentDate extends React.Component {
     const { listOpen, monthNumber, monthBarContent } = this.state;
     let selectColor = (listOpen) ? 'rgba(245, 255, 250, .8)' : 'grey';
     return (
-        <CurrentDateWrap>
+      <CurrentDateWrap>
           <DateSelectorWrapper onClick={this.onClick} color={selectColor}>
             {`${this.state.date}`}
           </DateSelectorWrapper>
         {this.renderList(listOpen, monthNumber, monthBarContent)}
-        </CurrentDateWrap>
+      </CurrentDateWrap>
     );
   }
 }

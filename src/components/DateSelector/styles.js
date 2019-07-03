@@ -31,17 +31,18 @@ const moveInDown = keyframes `
 
 const CurrentDateWrap = styled.div`
   position: relative;
+  height: 5vh;
+  width: 0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-
-  font-size: 9vh;
-
 `
 
 const DateSelectorWrapper = styled.div`
   position: absolute;
+  height: 10vh;
+  width: 80vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -57,6 +58,7 @@ const DateSelectorWrapper = styled.div`
   color: ${props => props.color};
   border-radius: 100px;
   transition: all .2s;
+  font-size: 9vh;
 
   :hover {
     background-color: rgba(95, 290, 172);
@@ -72,62 +74,68 @@ const DateSelectorWrapper = styled.div`
 const DateCell = styled.div`
   position: relative;
   display: inline-block;
-  height: 5vh;
-  width: 5vh;
+  height: 5.5vh;
+  width: 12vh;
   z-index: 1;
-  margin: 5px;
-  padding-top: 10px;
-  outline: none;
-  border: white;
   border-radius: 5px;
   background-color: white;
-  color: ${ props => props.textColor};
+  color: ${ props => props.textColor };
   cursor: pointer;
   text-align: center;
+  vertical-align: middle;
+  line-height: 5vh;
   :hover {
     background-color: grey;
+    color: ${props => {
+      if (props.textColor === 'grey') {
+        return 'white';
+      }
+    }};
   }
 `
 
 const CurrentMonthLayout = styled.div`
   position: relative;
   display: block;
-  width: 50vh;
   z-index: 1;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: white;
   cursor: pointer;
   text-align: center;
   font-size: 3vh;
+  color: grey;
 `
-
 const WeekdayCell = styled.div`
   position: relative;
   display: inline-block;
   height: 5vh;
-  width: 5vh;
+  width: 12vh;
   z-index: 1;
-  margin: 5px;
-  outline: none;
-  border: white;
-  border-radius: 0px;
   background-color: white;
   cursor: pointer;
   text-align: center;
+  color: grey;
 `
 
 const Calendar = styled.div`
-  position: absolute;
-  display: block;
+  position: relative;
+  display: inline-block;
+  height: 50vh;
+  width: 90vh;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 15%);
+  padding-top: 15px;
+  transform: translate(-50%, 20%);
   border-radius: 5px;
-  width: 50vh;
   z-index: 1;
   background-color: white;
   cursor: pointer;
   color: black;
   font-size: 3vh;
+  text-align: center;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, .2);
 
   animation: ${moveInDown} .3s ease-in;
 `
@@ -135,12 +143,17 @@ const Calendar = styled.div`
 const MonthBar = styled.div`
   position: relative;
   display: block;
-  width: 45vh;
-  z-index: 1;
-  margin: 10px;
+  top: 5%;
+  left: 50%;
+  border-radius: 5px;
+  padding-bottom: 15px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
   background-color: white;
   text-align: center;
   cursor: pointer;
+  font-size: 5vh;
+  color: grey;
 `
 
 export {
